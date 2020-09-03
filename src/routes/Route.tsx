@@ -1,0 +1,45 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable react/prop-types */
+import React from 'react';
+import {
+  Route as ReactDOMRoute,
+  RouteProps as ReactDOMRouteProps,
+  Redirect,
+} from 'react-router-dom';
+
+import { useAuth } from '../hooks/auth';
+
+interface RouteProps extends ReactDOMRouteProps {
+  isPrivate?: boolean;
+  component: React.ComponentType;
+}
+
+const Route: React.FC<RouteProps> = (
+  { isPrivate = false, component: Component, ...rest },
+) => {
+  const { user } = useAuth();
+
+  // isPrivate/isSigned
+  // true/true = OK
+  // true/false = Redirect to Login
+  // false/true = Redirect to Dashboard
+  // false/false = OK
+
+  return (
+    <ReactDOMRoute
+      {...rest}
+      render={({ location }) => (isPrivate === !!user ? (
+        <Component />
+      ) : (
+        <Redirect
+          to={{
+            pathname: isPrivate ? '/' : '/dashboard',
+            state: { from: location },
+          }}
+        />
+      ))}
+    />
+  );
+};
+
+export default Route;
