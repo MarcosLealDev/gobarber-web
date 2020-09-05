@@ -24,18 +24,20 @@ export const Container = styled.div<ContainerProps>`
       margin-top: 8px;
   }
 
+  ${(props) => props.isErrored && css`
+    border: 2px solid #c53030;
+  `}
+
   ${(props) => props.isFocused && css`
     color: #FF9000;
-    border-color: #FF9000;
+    border: 2px solid #FF9000;
   `}
 
   ${(props) => props.isFilled && css`
     color: #FF9000;
   `}
 
-  ${(props) => props.isErrored && css`
-    border-color: #c53030;
-  `}
+
 
   input {
     flex: 1;

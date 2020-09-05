@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 
 import { Container } from './styles';
@@ -7,8 +8,8 @@ interface TooltipProps {
   className?: string;
 }
 
-const Tooltip: React.FC<TooltipProps> = ({ title, className, children }) => (
-  <Container>
+const Tooltip: React.FC<TooltipProps> = ({ title, className = '', children }) => (
+  <Container className={className}>
     {children}
     <span>{title}</span>
   </Container>
